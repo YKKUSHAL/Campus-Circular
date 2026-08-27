@@ -1,0 +1,204 @@
+/* ==========================================
+   CAMPUS CIRCULAR - MASTER STYLESHEET
+   ========================================== */
+
+/* --- 1. COLOR PALETTE DEFINITIONS --- */
+:root {
+    --maroon: #8B1E2D; /* Primary brand headers */
+    --coral: #E63946;  /* Action buttons & alerts */
+    --yellow: #F4D35E; /* Highlights, active steps, stats */
+    --blue: #457B9D;   /* Structural outlines & secondary elements */
+    
+    --bg-light: #F8F9FA; 
+    --text-dark: #2B2D42; 
+    --white: #FFFFFF;
+  }
+  
+  /* --- 2. GLOBAL RESETS & TYPOGRAPHY --- */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+  }
+  
+  /* Engineering Graph Paper Grid Background */
+  .bg-grid {
+      background-color: var(--bg-light);
+      background-image: 
+          linear-gradient(to right, #e8e8e8 1px, transparent 1px),
+          linear-gradient(to bottom, #e8e8e8 1px, transparent 1px);
+      background-size: 30px 30px;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* --- 3. REUSABLE BUTTONS & UTILITIES --- */
+  .btn-primary {
+    background-color: var(--coral);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+  
+  /* --- 4. NAVIGATION BAR STYLES --- */
+  .nav-btn {
+      background: transparent;
+      border: none;
+      color: #666;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+  }
+  
+  .nav-btn:hover {
+      background-color: #f0f0f0;
+      color: var(--text-dark);
+  }
+  
+  .nav-btn.active {
+      background-color: var(--maroon);
+      color: var(--white);
+  }
+  
+  /* --- 5. BROWSE PAGE & GRID STYLES --- */
+  .browse-container {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 30px;
+      margin-top: 20px;
+  }
+  
+  .filter-sidebar {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      height: fit-content;
+  }
+  
+  .filter-group h4 {
+      font-size: 0.8rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      margin-top: 20px;
+  }
+  
+  .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+  }
+  
+  .resource-card {
+      background: var(--white);
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* --- 6. GLOBAL CONDITION MODAL STYLES --- */
+  .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: none; 
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      animation: fadeInModal 0.25s ease-out forwards;
+  }
+  
+  .modal-content {
+      background: var(--white);
+      width: 900px;
+      max-width: 95vw;
+      border-radius: 12px;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  }
+  
+  .close-btn {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 50%;
+      width: 30px; height: 30px;
+      cursor: pointer;
+      font-weight: bold;
+  }
+  
+  /* ==========================================
+     ANIMATIONS & VISUAL EFFECTS
+     ========================================== */
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  #app-content {
+    animation: fadeIn 0.35s ease-out forwards;
+  }
+  
+  .btn-primary, button[onclick^="navigate"], button[style*="background: var(--coral)"], button[style*="background: var(--maroon)"] {
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .btn-primary:hover, button[onclick^="navigate"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-primary:active, button[onclick^="navigate"]:active {
+    transform: translateY(1px);
+  }
+  
+  @keyframes fadeInModal {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Circular | TSEC</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js CDN for 3D Live Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-grid" style="position: relative; overflow-x: hidden;">
+
+    <!-- 3D BACKGROUND CANVAS CONTAINER -->
+    <div id="canvas-3d-background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.4;"></div>
+
+    <!-- TOP NAVIGATION BAR -->
+    <header style="background-color: var(--white); border-bottom: 1px solid #e0e0e0; padding: 10px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            
+            <!-- Logo Section using Local Downloaded Image -->
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="tsec-logo.jpg" alt="TSEC Logo" style="height: 32px; width: 32px; object-fit: contain; border-radius: 4px;">
+                <div>
+                    <h1 style="font-size: 1.1rem; margin: 0; color: var(--maroon); font-family: serif; line-height: 1.1;">Campus Circular</h1>
+                    <p style="font-size: 0.6rem; color: #888; margin: 0; letter-spacing: 0.5px; text-transform: uppercase;">TSEC • Peer Resource Exchange</p>
+                </div>
+            </div>
+            
+            <!-- Center Routing Links -->
+            <nav style="display: flex; gap: 15px; align-items: center; font-size: 0.9rem;">
+                <button onclick="navigate('home')" id="nav-home" class="nav-btn active"><i class="fas fa-search"></i> Home</button>
+                <button onclick="navigate('browse')" id="nav-browse" class="nav-btn"><i class="fas fa-th-large"></i> Browse</button>
+                <button onclick="navigate('exchanges')" id="nav-exchanges" class="nav-btn"><i class="fas fa-exchange-alt"></i> My Exchanges</button>
+                <button onclick="navigate('impact')" id="nav-impact" class="nav-btn"><i class="fas fa-chart-line"></i> Impact</button>
+                <button onclick="navigate('profile')" id="nav-profile" class="nav-btn"><i class="fas fa-user"></i> Profile</button>
+                <button onclick="navigate('admin')" id="nav-admin" class="nav-btn"><i class="fas fa-shield-alt"></i> Admin</button>
+            </nav>
+            
+            <!-- Right Side Profile & Status -->
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="font-size: 0.75rem; color: #666; font-weight: bold;">
+                    <span style="color: var(--coral);">●</span> 612 LIVE
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; border-left: 1px solid #ddd; padding-left: 20px;">
+                    <div style="background-color: var(--blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">
+                        KD
+                    </div>
+                    <div style="line-height: 1.2;">
+                        <div style="font-weight: bold; font-size: 0.9rem; color: var(--text-dark);">Kushal</div>
+                        <div style="font-size: 0.7rem; color: #888;">Trust 4.9⭐</div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+
+    <!-- GLOBAL CONDITION MODAL -->
+    <div id="condition-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button onclick="closeConditionModal()" class="close-btn">×</button>
+            <h2 style="font-family: serif; color: var(--text-dark); margin-bottom: 20px;">Sony A6000 Mirrorless Camera Kit - Condition Report</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <h3 style="margin: 0; font-size: 1.1rem;">Before Handover</h3>
+                        <span style="font-size: 0.7rem; font-weight: bold; color: var(--blue);">BEFORE</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #666;">Signed off by owner</p>
+                    <div style="background: #ddd; height: 150px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items:center; justify-content:center; color: #888;">[Camera Image Placeholder]</div>
+                    <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem;"><input type="checkbox" checked disabled> Body / exterior free of cracks</label>
+                    <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem;"><input type="checkbox" checked disabled> Cables / lenses / attachments intact</label>
+                    <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem;"><input type="checkbox" checked disabled> Battery / charge holds power</label>
+                </div>
+
+                <div style="background: #fffdf5; padding: 20px; border-radius: 8px; border-left: 4px solid var(--yellow);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <h3 style="margin: 0; font-size: 1.1rem;">After Return</h3>
+                        <span style="font-size: 0.7rem; font-weight: bold; color: var(--yellow);">AFTER</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #666;">To be signed by borrower</p>
+                    <div style="border: 2px dashed #ccc; height: 150px; border-radius: 8px; margin-bottom: 15px; display: flex; flex-direction: column; align-items:center; justify-content:center;">
+                        <p style="font-size: 0.8rem; color: #888;">Photos of returned item</p>
+                        <button style="background: var(--blue); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Simulate Upload</button>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem;"><input type="checkbox"> Body / exterior free of cracks</label>
+                    <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem;"><input type="checkbox"> Cables / lenses / attachments intact</label>
+                </div>
+            </div>
+            <input type="text" placeholder="Optional inspector notes (e.g., minor scuff on lens cap)" style="width: 100%; padding: 12px; margin-top: 20px; border: 1px solid #ccc; border-radius: 6px;">
+        </div>
+    </div>
+
+    <!-- DYNAMIC CONTENT AREA -->
+    <main id="app-content" class="container" style="margin-top: 30px; min-height: 80vh;">
+        <!-- Javascript injects views here -->
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="text-align: center; padding: 20px; margin-top: 40px; border-top: 1px solid #ddd; color: #666; font-size: 0.9rem; background: rgba(255,255,255,0.8);">
+        <p>&copy; 2026 Campus Circular - Organized by Coding Club-Codecrafters</p>
+    </footer>
+
+    <!-- 3D BACKGROUND ANIMATION SCRIPT -->
+    <script>
+        // Initialize Three.js 3D Background Animation
+        const container = document.getElementById('canvas-3d-background');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        // Create a floating geometric particle field (representing circular nodes/gear mesh)
+        const geometry = new THREE.BufferGeometry();
+        const count = 120;
+        const positions = new Float32Array(count * 3);
+
+        for(let i = 0; i < count * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 20;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        // Use color matching your palette (--blue / #457B9D)
+        const material = new THREE.PointsMaterial({
+            color: 0x457B9D,
+            size: 0.12,
+            transparent: true,
+            opacity: 0.7
+        });
+
+        const particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        camera.position.z = 5;
+
+        // Smooth rotation animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            particles.rotation.x += 0.0008;
+            particles.rotation.y += 0.0012;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive window resizing
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+
+    <!-- MAIN JAVASCRIPT MODULE CONNECTION -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
